@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
+
 const premiumClients = [
   { nombre: "Roberto", age: "23" },
   { nombre: "Pablo", age: "22" },
@@ -12,24 +13,27 @@ const premiumClients = [
 ];
 
 router.get("/", function (req, res) {
+  res.json({ clients: premiumClients });
+ });
+
+router.post("/", function (req, res) {
   const data = req.body;
   premiumClients.push(data);
   res.status(201).json({ createdClient: data });
-});
-
-router.post("/", function (req, res) {
-  res.json({ meetings: meetings });
-});
-
-router.put("/:id", function (req, res) {
-  res.status(200).json({ deletedUser: data });
-});
-
-router.delete("/:id", function (req, res) {
+ });
+ 
+ 
+ router.put("/:id", function (req, res) {
   const id = req.params.id;
+  const data = req.body;
   // Get the data from the request
   premiumClients[id] = data;
-  res.status(200).json({ updatedClient: premiumClients[id] });
-});
-
-module.exports = router;
+  res.status(200).json({ updatedClient: data });
+ });
+ router.delete("/:id", function (req, res) {
+   const id = req.params.id;
+   const data=  premiumClients[id]
+   res.status(200).json({ deletedClient: [data] });
+  });
+ 
+ module.exports = router;
